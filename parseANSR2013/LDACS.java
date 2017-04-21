@@ -16,7 +16,12 @@ public class LDACS implements IParser{
 	
 	final static Pattern checkTableStartPattern = Pattern.compile("Concelho,Datahora,M,FG,Via,Km,Natureza");
 	final static Pattern checkTableRowPattern = Pattern.compile("\"?.*?\"?,\"?.*?\"?,\"?.*?\"?,\"?.*?\"?,\"?.*?\"?,\"?.*?\"?,\"?.*\"?");
-	final static Pattern getRowDataPattern = Pattern.compile("\"?(.+?)\"?,\"?.*?\"?,\"?(.+?)\"?,\"?(.+?)\"?,\"?(.+?)\"?,\"?.*?\"?,\"?.*\"?");
+	final static Pattern getRowDataPattern = Pattern.compile(
+			"\"?(.+?)\"?,\"?.*?\"?,\"?(.+?)\"?,\"?(.+?)\"?,\"?(.+?)\"?,"
+	+"(\".+\"|.*?)"
+	+		",\"?.*\"?");
+	
+	final static Pattern check_if_road_Km_is_valid = Pattern.compile("[\\d,\\.,\\,]+");
 	
 	public LDACS(MODE mode) {
 		super();
@@ -85,13 +90,17 @@ public class LDACS implements IParser{
 			String mortos = matcher.group(2);
 			String feridosgraves = matcher.group(3);
 			String via = matcher.group(4);
-			//String km = matcher.group(5);
+			String km = matcher.group(5);
+			km = km.replace("\"","");
 			
 			String LatS,LonS,LatN,LonN;
 			
 			switch(mode){
 			case LDACS_EXCLUDE:
-				//if(km!=null||km.equals("")) continue;
+				if(km!=null&&check_if_road_Km_is_valid.matcher(km).matches()){
+					output_file.write("--excluded to add:" +zona +" | " + mortos +" | " + feridosgraves +" | "+ via);
+					continue;
+				}
 				output_file.write(buildFunction(zona,mortos,feridosgraves,via) + "\n");
 				break;
 			case LDACS_EXCLUDE_LARGE:

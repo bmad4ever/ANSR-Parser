@@ -130,6 +130,7 @@ public class LDACS implements IParser{
 	private String buildFunction(String zona, String mortos, String feridosgraves, String via) {
 
 		Matcher m = estnat.matcher(via);
+		String O_VIA = via;
 		if(m.find()) via = via.replace("EN", "N");
 		
 		m = inttext.matcher(mortos);
@@ -147,12 +148,13 @@ public class LDACS implements IParser{
 			return "--failed to add:" +zona +" | " + mortos +" | " + feridosgraves +" | "+ via;
 		}
 		return "select add_new_data_to_road_segments("
-				+res[0]+","
+				/*+res[0]+","
 				+res[1]+","
 				+res[2]+","
-				+res[3]+","
+				+res[3]+","*/
 				+res[4]+","
 				+res[5]+","
+				+"'"+O_VIA+"',"
 				+mortos+","
 				+feridosgraves
 				+");";

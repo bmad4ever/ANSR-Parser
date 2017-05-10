@@ -58,6 +58,12 @@ public class GoogleGeocodingAPI {
 		    }else return null;
 		}
 		
+		/*Pattern pattern = Pattern.compile(".*?\"long_name\": \"(.+?)\",", Pattern.DOTALL);
+		Matcher matcher = pattern.matcher(response);
+		if (matcher.find()) {
+			ret[it]=matcher.group(1);it++;
+		}*/
+		
 		return ret;
 	}
 }

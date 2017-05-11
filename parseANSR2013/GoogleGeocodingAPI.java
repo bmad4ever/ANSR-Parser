@@ -13,7 +13,10 @@ public class GoogleGeocodingAPI {
 
 	private GoogleGeocodingAPI(){}
 	
-	final static String base_url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAT6YvPdKrR3AGWBPeDdd5QsbxTQCUBiwk&address=";
+	public static void setKey(String key){
+		base_url = "https://maps.googleapis.com/maps/api/geocode/json?key="+key+"&address=";
+	}
+	static String base_url ;
 	
 	public static String[] sendGet(String location) throws Exception {
 

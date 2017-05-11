@@ -26,9 +26,9 @@ public class LDACS implements IParser{
 	public LDACS(MODE mode) {
 		super();
 		this.mode = mode;
-		if(mode!=MODE.LDACS_EXCLUDE){
+		/*if(mode!=MODE.LDACS_EXCLUDE){
 			throw new RuntimeException("Not Implemented!");
-		}
+		}*/
 	}
 
 	@Override
@@ -101,7 +101,6 @@ public class LDACS implements IParser{
 					output_file.write("--excluded to add:" +zona +" | " + mortos +" | " + feridosgraves +" | "+ via);
 					continue;
 				}
-				output_file.write(buildFunction(zona,mortos,feridosgraves,via) + "\n");
 				break;
 			case LDACS_EXCLUDE_LARGE:
 				break;
@@ -112,6 +111,7 @@ public class LDACS implements IParser{
 			default:
 				break;
 			}
+			output_file.write(buildFunction(zona,mortos,feridosgraves,via) + "\n");
 		}
 		}catch (Exception e) {
 			e.printStackTrace();
